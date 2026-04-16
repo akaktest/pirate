@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OceanView Hotel Pro</title>
+<title>OceanView Hotel Pro+</title>
 
 <style>
 body { margin:0; font-family:Arial; background:#f5f5f5; }
@@ -16,7 +16,7 @@ nav {
 nav a { color:white; margin:0 10px; text-decoration:none; }
 
 .hero {
-  background:#333; color:white; text-align:center;
+  background:#1e1e1e; color:white; text-align:center;
   padding:80px 20px;
 }
 
@@ -36,40 +36,54 @@ button {
   border:none; cursor:pointer; margin-top:10px;
 }
 
+input { padding:8px; margin:5px; width:200px; }
+
 /* Slider */
 .slider img { width:80%; max-width:600px; display:none; margin:auto; }
 .slider img.active { display:block; }
 
 /* Reviews */
-.review-box { background:white; padding:10px; margin:10px; border-radius:8px; }
+.review-box {
+  background:white; padding:10px; margin:10px;
+  border-radius:8px;
+}
 
-/* Admin */
-.admin input { padding:8px; margin:5px; }
+/* Taxi box */
+.taxi-box {
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  display:inline-block;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
 </style>
 
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div>OceanView Pro</div>
+  <div>OceanView Pro+</div>
   <div>
     <a href="#menu">Menu</a>
     <a href="#gallery">Gallery</a>
     <a href="#reviews">Reviews</a>
+    <a href="#taxi">Taxi</a>
     <a href="#admin">Admin</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <h1>Luxury Hotel & Restaurant</h1>
-  <p>Book | Eat | Enjoy</p>
+  <p>Book | Eat | Travel Easy 🚖</p>
 </div>
 
 <!-- MENU -->
 <section id="menu">
 <h2>Food Menu</h2>
-<div class="grid">
 
+<div class="grid">
   <div class="card">
     <h3>Pizza</h3>
     <p>$12</p>
@@ -87,7 +101,6 @@ button {
     <p>$11</p>
     <button onclick="order('Pasta')">Order Now</button>
   </div>
-
 </div>
 </section>
 
@@ -101,19 +114,34 @@ button {
   <img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
 </div>
 
-<button onclick="nextSlide()">Next</button>
+<button onclick="nextSlide()">Next Image</button>
 </section>
 
 <!-- REVIEWS -->
 <section id="reviews">
-<h2>Reviews</h2>
+<h2>Guest Reviews ⭐</h2>
 
 <div id="reviewList"></div>
 
 <input id="name" placeholder="Your Name"><br>
 <input id="review" placeholder="Your Review"><br>
 <button onclick="addReview()">Submit Review</button>
+</section>
 
+<!-- TAXI SERVICE -->
+<section id="taxi">
+<h2>🚖 Call Taxi Service</h2>
+
+<div class="taxi-box">
+  <p>Need a ride from the hotel?</p>
+
+  <input id="pickup" placeholder="Pickup Location"><br>
+  <input id="drop" placeholder="Drop Location"><br>
+
+  <button onclick="callTaxi()">Book Taxi</button>
+
+  <p id="taxiMsg"></p>
+</div>
 </section>
 
 <!-- ADMIN -->
@@ -127,9 +155,10 @@ button {
 </section>
 
 <script>
+
 // ORDER (demo)
 function order(item){
-  alert("You ordered: " + item + " (Demo only - no payment system yet)");
+  alert("Order placed for: " + item + " (Demo only)");
 }
 
 // SLIDER
@@ -156,10 +185,11 @@ function addReview(){
 }
 
 window.onload = function(){
-  document.getElementById("reviewList").innerHTML = localStorage.getItem("reviews") || "";
+  document.getElementById("reviewList").innerHTML =
+  localStorage.getItem("reviews") || "";
 }
 
-// ADMIN (demo menu editor)
+// ADMIN
 function addItem(){
   let item = document.getElementById("item").value;
 
@@ -169,6 +199,22 @@ function addItem(){
 
   document.getElementById("menuList").appendChild(div);
 }
+
+// TAXI SERVICE
+function callTaxi(){
+  let pickup = document.getElementById("pickup").value;
+  let drop = document.getElementById("drop").value;
+
+  if(pickup === "" || drop === ""){
+    document.getElementById("taxiMsg").innerText =
+    "Please enter both locations.";
+    return;
+  }
+
+  document.getElementById("taxiMsg").innerText =
+  "🚖 Taxi booked from " + pickup + " to " + drop + " (Demo booking)";
+}
+
 </script>
 
 </body>
